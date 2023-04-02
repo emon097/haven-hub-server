@@ -43,7 +43,6 @@ async function run() {
       const productDetails = await addProduct.findOne(query);
       res.send(productDetails);
     });
-
     // cartDetails
     app.post("/addCart", async (req, res) => {
       const myCart = req.body;
@@ -71,6 +70,20 @@ async function run() {
       const query = { _id: new ObjectId(id) };
       const result = await addCart.deleteOne(query);
       res.send(result);
+    });
+
+    //admin product
+    app.get("/addProducts", async (req, res) => {
+      const email = req.query.email;
+      const query = { email: email };
+      const result = await addProduct.find(query).toArray();
+      res.send(result);
+    });
+    app.get("/dashboard/adminProduct/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const productDetails = await addProduct.findOne(query);
+      res.send(productDetails);
     });
   } finally {
   }
